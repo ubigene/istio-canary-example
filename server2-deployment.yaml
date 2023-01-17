@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-v2
+  namespace: development
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: service
+      version: v2
+  template:
+    metadata:
+      name: service
+      labels:
+        k8s-app: service
+        version: v2
+    spec:
+      containers:
+        - name: service
+          image: subfuzion/netcat
+          securityContext:
+            privileged: false
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+          command: ["nc"]
+          args: ["-kl", "8888"]

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client
+  namespace: development
+  labels:
+    k8s-app: client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: client
+  template:
+    metadata:
+      name: client
+      labels:
+        k8s-app: client
+    spec:
+      containers:
+        - name: client
+          image: subfuzion/netcat
+          env:
+          - name: GRPC_SERVER
+            value: grpc-python-server-0.grpc-python-server.development.svc.cluster.local
+          securityContext:
+            privileged: false
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+          command: ["tail"]
+          args: ["-f", "/dev/null"]
+         

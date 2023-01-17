@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service
+  namespace: development
+spec:
+  ports:
+  - name: service
+    port: 8888
+    targetPort: 8888
+  selector:
+    k8s-app: service
+  type: ClusterIP
